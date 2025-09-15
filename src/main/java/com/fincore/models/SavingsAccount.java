@@ -1,11 +1,11 @@
-package com.fincore.app;
+package com.fincore.models;
 
 /**
  * SavingsAccount class representing a savings account with interest functionality.
  * This class extends Account and adds interest rate capabilities.
  * 
  * @author FinCore Development Team
- * @version 3.0.0
+ * @version 4.0.0
  */
 public class SavingsAccount extends Account {
     

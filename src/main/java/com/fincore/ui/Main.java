@@ -1,13 +1,18 @@
-package com.fincore.app;
+package com.fincore.ui;
+
+import com.fincore.models.Account;
+import com.fincore.models.SavingsAccount;
+import com.fincore.models.InsufficientFundsException;
 
 import java.util.Scanner;
 
 /**
  * Main class for the FinCore CLI Banking application.
  * This is the entry point for the command-line banking system.
+ * Handles user interaction and coordinates between different components.
  * 
  * @author FinCore Development Team
- * @version 3.0.0
+ * @version 4.0.0
  */
 public class Main {
     
@@ -131,6 +136,7 @@ public class Main {
     
     /**
      * Handles the withdrawal operation for checking account.
+     * Uses try-catch to handle InsufficientFundsException.
      * 
      * @param account the account to withdraw from
      */
@@ -142,13 +148,15 @@ public class Main {
         }
         double amount = scanner.nextDouble();
         
-        if (account.withdraw(amount)) {
+        try {
+            account.withdraw(amount);
             System.out.println("Withdrawal successful!");
             System.out.println("Amount withdrawn: $" + String.format("%.2f", amount));
             System.out.println("New balance: $" + String.format("%.2f", account.getBalance()));
-        } else {
-            System.out.println("Error: Invalid withdrawal amount or insufficient funds!");
-            System.out.println("Current balance: $" + String.format("%.2f", account.getBalance()));
+        } catch (InsufficientFundsException e) {
+            System.out.println("Withdrawal failed: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Withdrawal failed: " + e.getMessage());
         }
     }
     
@@ -176,6 +184,7 @@ public class Main {
     
     /**
      * Handles the withdrawal operation for savings account.
+     * Uses try-catch to handle InsufficientFundsException.
      * 
      * @param account the savings account to withdraw from
      */
@@ -187,13 +196,15 @@ public class Main {
         }
         double amount = scanner.nextDouble();
         
-        if (account.withdraw(amount)) {
+        try {
+            account.withdraw(amount);
             System.out.println("Withdrawal successful!");
             System.out.println("Amount withdrawn: $" + String.format("%.2f", amount));
             System.out.println("New balance: $" + String.format("%.2f", account.getBalance()));
-        } else {
-            System.out.println("Error: Invalid withdrawal amount or insufficient funds!");
-            System.out.println("Current balance: $" + String.format("%.2f", account.getBalance()));
+        } catch (InsufficientFundsException e) {
+            System.out.println("Withdrawal failed: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Withdrawal failed: " + e.getMessage());
         }
     }
 }

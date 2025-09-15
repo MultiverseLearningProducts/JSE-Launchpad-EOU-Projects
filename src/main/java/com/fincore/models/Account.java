@@ -1,11 +1,11 @@
-package com.fincore.app;
+package com.fincore.models;
 
 /**
  * Account class representing a basic bank account.
  * This class encapsulates account data and provides methods for banking operations.
  * 
  * @author FinCore Development Team
- * @version 3.0.0
+ * @version 4.0.0
  */
 public class Account {
     
@@ -58,17 +58,21 @@ public class Account {
     
     /**
      * Withdraws the specified amount from the account.
-     * Prevents withdrawal if it would result in a negative balance.
+     * Throws InsufficientFundsException if withdrawal would result in negative balance.
      * 
      * @param amount the amount to withdraw
-     * @return true if withdrawal was successful, false otherwise
+     * @throws InsufficientFundsException if the withdrawal amount exceeds available balance
      */
-    public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
-            return true;
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive");
         }
-        return false;
+        
+        if (amount > balance) {
+            throw new InsufficientFundsException(amount, balance);
+        }
+        
+        balance -= amount;
     }
     
     /**
